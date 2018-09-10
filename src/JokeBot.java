@@ -1,12 +1,10 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class JokeBot {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		int jokeCounter = 0;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Scanner input = new Scanner(System.in);
 		String[] jokes = new String[] {"Kolobok hanged himself! :)", "Buratino is drown. :(",
 				"Погуглил \"Как устроить лесной пожар?\". Получил 48500 зажигательных идей.",
 				"Самая мощная организация в мире - это дебилы, у них везде свои люди."};
@@ -14,7 +12,7 @@ public class JokeBot {
 		System.out.println("Hello, my name is JokeBot.\nI am a chat-bot. I live to serve humans and tell hilarious jokes!\nWanna some?");
 		loop1 : while (true)
 		{			
-			switch (br.readLine().toLowerCase().replaceAll("\\s",""))
+			switch (input.nextLine().toLowerCase().replaceAll("\\s",""))
 			{
 			case "yes":
 			{
