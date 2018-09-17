@@ -3,14 +3,14 @@ import java.util.Map;
 
 public class Dialog {
 
-	public Map<String, Action> KeyWords;
+	public Map<String, Action> keyWords;
 	
-	public Dialog(HashMap<String, Action> keyWords)
+	public Dialog(HashMap<String, Action> words)
 	{
-		KeyWords = keyWords;
+		keyWords = words;
 	}
 	public Dialog()
 	{
-		KeyWords = new HashMap<String, Action>();;
+		keyWords = new HashMap<String, Action>();;
 	}
 }
