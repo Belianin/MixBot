@@ -1,6 +1,7 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,8 +26,8 @@ public class FileWorker {
 		return sb.toString();
 	}
 
-	public static List<Ingredient> parseIngredients(String rowString) {
-		ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+	public static HashMap<String, Ingredient> parseIngredients(String rowString) {
+		HashMap<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
 
 		String[] rowIng = rowString.split("!");
 		for (String row : rowIng) {
@@ -46,7 +47,7 @@ public class FileWorker {
 				}
 				}
 			}
-			ingredients.add(ing);
+			ingredients.put(ing.name, ing);
 		}
 
 		return ingredients;

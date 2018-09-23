@@ -1,39 +1,47 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MixBot {
-	private static List<Ingredient> ingredients;
+	public static Map<String, Dialog> dialogs = new HashMap<String, Dialog>();
+	public static Map<String, Ingredient> ingredients;
+	public static Map<String, Food> food = new HashMap<String, Food>();
 	private static Scanner input = new Scanner(System.in);
-	private static Dialog currentDialog = new Dialog();
+	private static Dialog currentDialog;
 	
 	public static void main(String[] args) {
-		ingredients = FileWorker.parseIngredients(FileWorker.read("data/base.mbd"));
-		
-		for (Ingredient ing : ingredients)
-			System.out.println(ing.ingClass + " " + ing.name);
-		
-		currentDialog.keyWords.put("инфо", new Action("Это тестовый бот"));
+		initialize();
 		
 		System.out.println("Hello");
-		
 		while (true)
 		{			
-			String[] words = getWords();
-			
-			for (String word : words)
-				 if (currentDialog.keyWords.containsKey(word))
-					 Act(currentDialog.keyWords.get(word));
+			Response response = currentDialog.respond(getWords());
+			Act(response);
 		}
 	}
 	public static String[] getWords() {
 		return input.nextLine().toLowerCase().split(" ");// .replaceAll("\\s","");
 	}
-	public static void Act(Action action)
+	public static void Act(Response response)
 	{
-		if (action.nextDialog != null)
-			 currentDialog = action.nextDialog;
-		 if (action.message != null)
-		 System.out.println(action.message);
+		if (response.nextDialog != null)
+			 currentDialog = response.nextDialog;
+		 if (response.message != null)
+		 System.out.println(response.message);
+	}
+	private static void initialize()
+	{
+		ingredients = FileWorker.parseIngredients(FileWorker.read("data/base.mbd"));
+		
+		dialogs.put("start", new SimpleDialog());
+		dialogs.put("basket", new BasketDialog());
+		
+		currentDialog = dialogs.get("start");
+		
+		dialogs.get("start").addAction(new String[] {"инфо", "помощь", "что", "информация"}, new Response("MixBot может подсказать вам что приготовить, готовы?"));
+		dialogs.get("start").addAction(new String[] {"да", "начать", "готовить"}, new Response("Что у вас есть?", dialogs.get("basket")));
 	}
 
 }
