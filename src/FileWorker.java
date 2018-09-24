@@ -48,6 +48,7 @@ public class FileWorker {
 				}
 				}
 			}
+			System.out.println(ing.name + ing.ingClass);
 			ingredients.put(ing.name, ing);
 		}
 

@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Random;
 
 public class BasketDialog implements Dialog {
-
-	public List<Food> food = new ArrayList<Food>();
 	private Random random = new Random();
 	public List<String> params = new ArrayList<String>();
 	public List<String> endWords = new ArrayList<String>();
@@ -40,8 +38,8 @@ public class BasketDialog implements Dialog {
 			params.add(word);
 		}
 		if (params.size() > 6)
-			return new Response(elseWords.get(random.nextInt(2) + 2), MixBot.dialogs.get("start"));
-		return new Response(elseWords.get(random.nextInt(2)), MixBot.dialogs.get("start"));
+			return new Response(elseWords.get(random.nextInt(2) + 2));
+		return new Response(elseWords.get(random.nextInt(2)));
 	}
 	private String matchFood()
 	{
@@ -74,6 +72,7 @@ public class BasketDialog implements Dialog {
 		    	result = entry.getValue().food;
 		    }
 		}
+		params.clear();
 		if (result == null)
 			return "Из этого ничего не приготовить!";
 		//более подбробно

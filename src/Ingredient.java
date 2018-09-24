@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Ingredient {
 	public String name;
 	public String ingClass;
-	public ArrayList<Food> possibleFood = new ArrayList<Food>();
+	public List<Food> possibleFood = new ArrayList<Food>();
 	
 	public Ingredient(String sName, String sClass, ArrayList<Food> food)
 	{
