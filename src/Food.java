@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Food 
 {
 	
-	public ArrayList<Ingredient> ingrList;
+	public List<Ingredient> ingrList = new ArrayList<Ingredient>();
 	public String name;
 	public String type;
 	
