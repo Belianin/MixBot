@@ -59,16 +59,15 @@ public class BasketDialog implements Dialog {
 		//добавляем все возможные блюда
 		for (Ingredient ing : ingredients)
 		{
-			System.out.println(ing.name);
 			for (Food food : ing.possibleFood)
 			{
-				System.out.println(food.name);
 				if (possibleFood.containsKey(food.name))
 					possibleFood.get(food.name).checkList.put(ing, true);
 				else
 					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		System.out.println(possibleFood.size());
 		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
@@ -77,23 +76,23 @@ public class BasketDialog implements Dialog {
 		//сравниваем какие сравнения больше подходят , смотрим хватат ли им ингридинетов и что добавить :(
 		Food result = null;
 >>>>>>> 8a5ba77a3213869f03a97cb07c3714d3783dd511
+=======
+		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
+		Food result = null;
+>>>>>>> parent of d26a0e1... It's alive
 		double rate = 0;
 		for (Map.Entry<String, PossibleFood> entry : possibleFood.entrySet()) {
 		    if (entry.getValue().getPercentage() > rate)
 		    {
 		    	rate = entry.getValue().getPercentage();
-		    	result = entry.getValue();
+		    	result = entry.getValue().food;
 		    }
 		}
 		params.clear();
 		if (result == null)
 			return "Из этого ничего не приготовить!";
-		//более подбробно чего не хватает и тд
-		StringBuilder builder = new StringBuilder();
-		builder.append(result.food.name + ". У вас есть ");
-		builder.append(result.getCount() + "\\" + result.checkList.size() + " продуктов!");
-		
-		return builder.toString();
+		//более подбробно
+		return result.name + "у вас есть " + rate + "продуктов!";
 	}
 	class PossibleFood
 	{
@@ -107,20 +106,14 @@ public class BasketDialog implements Dialog {
 			
 			checkList.put(ing, true);
 		}
-		public int getCount()
+		public double getPercentage()
 		{
 			int count = 0;
 			for (Ingredient ing : food.ingrList)
-			{
-				System.out.println(checkList.get(ing));
 				if (checkList.get(ing))
 					count++;
-			}
-			return count;
-		}
-		public double getPercentage()
-		{
-			return (getCount() / (double)checkList.size()) * 100;
+			
+			return (0 / checkList.size()) * 100;
 		}
 	}
 
