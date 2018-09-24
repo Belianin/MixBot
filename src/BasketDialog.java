@@ -69,6 +69,7 @@ public class BasketDialog implements Dialog {
 		}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		System.out.println(possibleFood.size());
 		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
 		PossibleFood result = null;
@@ -76,6 +77,10 @@ public class BasketDialog implements Dialog {
 		//сравниваем какие сравнения больше подходят , смотрим хватат ли им ингридинетов и что добавить :(
 		Food result = null;
 >>>>>>> 8a5ba77a3213869f03a97cb07c3714d3783dd511
+=======
+		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
+		Food result = null;
+>>>>>>> parent of d26a0e1... It's alive
 =======
 		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
 		Food result = null;
