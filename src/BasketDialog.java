@@ -7,12 +7,17 @@ import java.util.Map;
 import java.util.Random;
 
 public class BasketDialog implements Dialog {
-	private Random random = new Random();
-	public List<String> params = new ArrayList<String>();
-	public List<String> endWords = new ArrayList<String>();
-	public List<String> elseWords = new ArrayList<String>();
+<<<<<<< HEAD
+=======
 
-	public BasketDialog() {
+>>>>>>> 8a5ba77a3213869f03a97cb07c3714d3783dd511
+	private Random random = new Random();
+	private List<String> params = new ArrayList<>();
+	private List<String> endWords = new ArrayList<>();
+	private List<String> elseWords = new ArrayList<>();
+
+	public BasketDialog()
+    {
 		endWords.add("все");
 		endWords.add("всё");
 		endWords.add("готово");
@@ -43,7 +48,7 @@ public class BasketDialog implements Dialog {
 	}
 	private String matchFood()
 	{
-		Map<String, PossibleFood> possibleFood = new HashMap<String, PossibleFood>();
+		Map<String, PossibleFood> possibleFood = new HashMap<>();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		//отсеиваем еду от бреда
 		for (String ing : params)
@@ -64,9 +69,14 @@ public class BasketDialog implements Dialog {
 					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
 		}
+<<<<<<< HEAD
 		System.out.println(possibleFood.size());
 		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
 		PossibleFood result = null;
+=======
+		//сравниваем какие сравнения больше подходят , смотрим хватат ли им ингридинетов и что добавить :(
+		Food result = null;
+>>>>>>> 8a5ba77a3213869f03a97cb07c3714d3783dd511
 		double rate = 0;
 		for (Map.Entry<String, PossibleFood> entry : possibleFood.entrySet()) {
 		    if (entry.getValue().getPercentage() > rate)
@@ -88,7 +98,7 @@ public class BasketDialog implements Dialog {
 	class PossibleFood
 	{
 		public Food food;
-		public Map<Ingredient, Boolean> checkList = new HashMap<Ingredient, Boolean>();
+		public Map<Ingredient, Boolean> checkList = new HashMap<>();
 		public PossibleFood(Food f, Ingredient ing)
 		{
 			food = f;
@@ -114,7 +124,8 @@ public class BasketDialog implements Dialog {
 		}
 	}
 
-	public void addAction(String[] words, Response act) {
+	public void addAction(String[] words, Response act)
+	{
 
 	}
 }
