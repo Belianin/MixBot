@@ -29,6 +29,7 @@ public class FileWorker {
 	public static HashMap<String, Ingredient> parseIngredients(String rowString) {
 		HashMap<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
 
+		rowString = rowString.toLowerCase();
 		String[] rowIng = rowString.split("!");
 		for (String row : rowIng) {
 			System.out.println(row);

@@ -33,17 +33,17 @@ public class BasketDialog implements Dialog {
 				if (params.size() == 0)
 					return new Response("Вы пока еще ничего не добавили!");
 				else
-					return new Response("Варим!");
+					return new Response(matchFood(), MixBot.dialogs.get("start"));
 			}
 		}
 		for (String word : words) {
 			params.add(word);
 		}
 		if (params.size() > 6)
-			return new Response(elseWords.get(random.nextInt(2) + 2));
-		return new Response(elseWords.get(random.nextInt(2)));
+			return new Response(elseWords.get(random.nextInt(2) + 2), MixBot.dialogs.get("start"));
+		return new Response(elseWords.get(random.nextInt(2)), MixBot.dialogs.get("start"));
 	}
-	private Food matchFood()
+	private String matchFood()
 	{
 		Map<String, PossibleFood> possibleFood = new HashMap<String, PossibleFood>();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -74,7 +74,10 @@ public class BasketDialog implements Dialog {
 		    	result = entry.getValue().food;
 		    }
 		}
-		return result;
+		if (result == null)
+			return "Из этого ничего не приготовить!";
+		//более подбробно
+		return result.name + "у вас есть " + rate + "продуктов!";
 	}
 	class PossibleFood
 	{
