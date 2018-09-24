@@ -1,6 +1,6 @@
 
-public class Response {
-
+public class Response
+    {
 	public String message;
 	public Dialog nextDialog = null;
 	
@@ -13,4 +13,4 @@ public class Response {
 	{
 		message = msg;
 	}
-}
+    }

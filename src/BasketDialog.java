@@ -99,7 +99,8 @@ public class BasketDialog implements Dialog {
 		}
 	}
 
-	public void addAction(String[] words, Response act) {
+	public void addAction(String[] words, Response act)
+	{
 
 	}
 }
