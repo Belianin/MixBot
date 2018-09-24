@@ -8,13 +8,13 @@ import java.util.Random;
 
 public class BasketDialog implements Dialog {
 
-	public List<Food> food = new ArrayList<Food>();
 	private Random random = new Random();
-	public List<String> params = new ArrayList<String>();
-	public List<String> endWords = new ArrayList<String>();
-	public List<String> elseWords = new ArrayList<String>();
+	private List<String> params = new ArrayList<>();
+	private List<String> endWords = new ArrayList<>();
+	private List<String> elseWords = new ArrayList<>();
 
-	public BasketDialog() {
+	private BasketDialog()
+    {
 		endWords.add("все");
 		endWords.add("всё");
 		endWords.add("готово");
@@ -45,7 +45,7 @@ public class BasketDialog implements Dialog {
 	}
 	private String matchFood()
 	{
-		Map<String, PossibleFood> possibleFood = new HashMap<String, PossibleFood>();
+		Map<String, PossibleFood> possibleFood = new HashMap<>();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		//отсеиваем еду от бреда
 		for (String ing : params)
@@ -64,7 +64,7 @@ public class BasketDialog implements Dialog {
 					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
 		}
-		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
+		//сравниваем какие сравнения больше подходят , смотрим хватат ли им ингридинетов и что добавить :(
 		Food result = null;
 		double rate = 0;
 		for (Map.Entry<String, PossibleFood> entry : possibleFood.entrySet()) {
@@ -82,7 +82,7 @@ public class BasketDialog implements Dialog {
 	class PossibleFood
 	{
 		public Food food;
-		public Map<Ingredient, Boolean> checkList = new HashMap<Ingredient, Boolean>();
+		public Map<Ingredient, Boolean> checkList = new HashMap<>();
 		public PossibleFood(Food f, Ingredient ing)
 		{
 			food = f;

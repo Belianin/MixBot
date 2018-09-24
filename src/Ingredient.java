@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Ingredient {
 	public String name;
 	public String ingClass;
-	public ArrayList<Food> possibleFood = new ArrayList<Food>();
+	public ArrayList<Food> possibleFood;
 	
 	public Ingredient(String sName, String sClass, ArrayList<Food> food)
 	{
@@ -16,7 +16,7 @@ public class Ingredient {
 	{
 		name = "";
 		ingClass = "";
-		possibleFood = new ArrayList<Food>();
+		possibleFood = new ArrayList<>();
 	}
 
 }
