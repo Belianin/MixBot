@@ -45,7 +45,7 @@ public class BasketDialog implements Dialog {
 	}
 	private Food matchFood()
 	{
-		Map<String, Number> possibleFood = new HashMap<String, Number>();
+		Map<String, PossibleFood> possibleFood = new HashMap<String, PossibleFood>();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		//отсеиваем еду от бреда
 		for (String ing : params)
@@ -59,19 +59,44 @@ public class BasketDialog implements Dialog {
 			for (Food food : ing.possibleFood)
 			{
 				if (possibleFood.containsKey(food.name))
-					possibleFood.get(food.name).Value++;
+					possibleFood.get(food.name).checkList.put(ing, true);
 				else
-					possibleFood.put(food.name, new Number());
+					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
 		}
-		String foodName = "";
-		int foodRate = 0;
 		//сравниваем какие сравнения больше подходят , смотрим хватате ли им ингридинетов и что добавить :(
-		return null;
+		Food result = null;
+		double rate = 0;
+		for (Map.Entry<String, PossibleFood> entry : possibleFood.entrySet()) {
+		    if (entry.getValue().getPercentage() > rate)
+		    {
+		    	rate = entry.getValue().getPercentage();
+		    	result = entry.getValue().food;
+		    }
+		}
+		return result;
 	}
-	class Number
+	class PossibleFood
 	{
-		public int Value = 1;
+		public Food food;
+		public Map<Ingredient, Boolean> checkList = new HashMap<Ingredient, Boolean>();
+		public PossibleFood(Food f, Ingredient ing)
+		{
+			food = f;
+			for (Ingredient i : food.ingrList)
+				checkList.put(i, false);
+			
+			checkList.put(ing, true);
+		}
+		public double getPercentage()
+		{
+			int count = 0;
+			for (Ingredient ing : food.ingrList)
+				if (checkList.get(ing))
+					count++;
+			
+			return (0 / checkList.size()) * 100;
+		}
 	}
 
 	public void addAction(String[] words, Response act) {
