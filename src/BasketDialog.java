@@ -13,7 +13,7 @@ public class BasketDialog implements Dialog {
 	private List<String> endWords = new ArrayList<>();
 	private List<String> elseWords = new ArrayList<>();
 
-	private BasketDialog()
+	public BasketDialog()
     {
 		endWords.add("все");
 		endWords.add("всё");
