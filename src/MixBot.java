@@ -34,7 +34,7 @@ public class MixBot {
 	private static void initialize()
 	{
 		ingredients = FileWorker.parseIngredients(FileWorker.read("data/base.mbd"));
-		food.put("кровавая мэри", new Food("коктейль", "кровавая мэри", new Ingredient[] {ingredients.get("томат"), ingredients.get("водка"), ingredients.get("сельдерей")}));
+		food.put("кровавая мэри", new Food("коктейль", "кровавая мэри", ingredients.get("томат")));
 		for (Ingredient ing : food.get("кровавая мэри").ingrList)
 		{
 			ing.possibleFood.add(food.get("кровавая мэри"));
