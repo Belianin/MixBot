@@ -7,10 +7,11 @@ public class Food {
 	public String name;
 	public String type;
 
-	public Food(String sType, String sName, Ingredient a) {
+	public Food(String sType, String sName, Ingredient[] a) {
 		type = sType;
 		name = sName;
-		ingrList.add(a);
+		for (Ingredient e : a)
+			ingrList.add(e);
 
 	}
 
