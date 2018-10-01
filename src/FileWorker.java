@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class FileWorker {
 
 	public static String read(String fileName) {
-		System.out.println(fileName);
+		//System.out.println(fileName);
 		StringBuilder sb = new StringBuilder();
 		try {
 			FileReader fr = new FileReader(fileName);
@@ -32,7 +32,7 @@ public class FileWorker {
 		rowString = rowString.toLowerCase();
 		String[] rowIng = rowString.split("!");
 		for (String row : rowIng) {
-			System.out.println(row);
+			//System.out.println(row);
 			Ingredient ing = new Ingredient();
 			String[] params = row.replace("\\s", "").split("&");
 			for (String param : params) {
@@ -46,9 +46,12 @@ public class FileWorker {
 					ing.ingClass = pair[1];
 					break;
 				}
+				case "coct":{
+					ing.possibleFood.add(new Food(pair[1]));
+				}
 				}
 			}
-			System.out.println(ing.name + ing.ingClass);
+			//System.out.println(ing.name + ing.ingClass);
 			ingredients.put(ing.name, ing);
 		}
 
