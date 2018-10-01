@@ -50,31 +50,7 @@ public class MixBot {
 				newFood.add(food.get(posFood.name));
 			}
 			ing.possibleFood = newFood;
-		}
-		//for (Food f : food.values())
-		//{
-		//	System.out.println("Блюдо " + f.name);
-		//	for (Ingredient ing : f.ingrList)
-		///	{
-		//		System.out.println(ing.name);
-		//		for (Food posFood : ing.possibleFood)
-		//			System.out.println(posFood.name);
-		//	}
-		//}
-		
-		//for (Ingredient ing : ingredients.values())
-		//{
-		//	System.out.println("Ингредиент " + ing.name);
-		//	for (Food posFood : ing.possibleFood)
-		//		System.out.println(posFood.name);
-		//}
-		
-		//food.put("кровавая мэри", new Food("коктейль", "кровавая мэри", new Ingredient[] {ingredients.get("томат"), ingredients.get("водка"), ingredients.get("сельдерей")}));
-		//for (Ingredient ing : food.get("кровавая мэри").ingrList)
-		//{
-		//	ing.possibleFood.add(food.get("кровавая мэри"));
-		//}
-		
+		}		
 		dialogs.put("start", new SimpleDialog());
 		dialogs.put("basket", new BasketDialog());
 		
