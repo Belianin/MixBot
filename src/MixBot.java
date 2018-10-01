@@ -14,7 +14,7 @@ public class MixBot {
 	public static void main(String[] args) {
 		initialize();
 		
-		System.out.println("Hello");
+		System.out.println("Доброго времени суток! Что вы хотите делать?");
 		while (true)
 		{			
 			Response response = currentDialog.respond(getWords());

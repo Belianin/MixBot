@@ -59,7 +59,7 @@ public class BasketDialog implements Dialog {
 					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
 		}
-		System.out.println(possibleFood.size());
+		//System.out.println(possibleFood.size());
 		// сравниваем какие сравнения больше подходят , смотрим хватате ли им
 		// ингридинетов и что добавить :(
 		PossibleFood result = null;
@@ -75,8 +75,9 @@ public class BasketDialog implements Dialog {
 			return "Из этого ничего не приготовить!";
 		// более подбробно чего не хватает и тд
 		StringBuilder builder = new StringBuilder();
-		builder.append(result.food.name + ". У вас есть ");
+		builder.append("Вы можете приготовить коктейль \"" + result.food.name + "\". У вас есть ");
 		builder.append(result.getCount() + "\\" + result.checkList.size() + " продуктов!");
+		//builder.append("Что будем делать дальше?");
 
 		return builder.toString();
 	}
