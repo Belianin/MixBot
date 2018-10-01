@@ -46,7 +46,7 @@ public class MixBot {
 		currentDialog = dialogs.get("start");
 		
 		dialogs.get("start").addAction(new String[] {"инфо", "помощь", "что", "информация"}, new Response("MixBot может подсказать вам что приготовить, готовы?"));
-		dialogs.get("start").addAction(new String[] {"да", "начать", "готовить"}, new Response("Что у вас есть?", dialogs.get("basket")));
+		dialogs.get("start").addAction(new String[] {"да", "начать", "готовить", "го"}, new Response("Что у вас есть?", dialogs.get("basket")));
 	}
 
 }
