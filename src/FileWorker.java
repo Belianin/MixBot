@@ -46,6 +46,11 @@ public class FileWorker {
 					ing.ingClass = pair[1];
 					break;
 				}
+				case "coct":{
+					String[] food = pair[1].split(",");
+					for (int i = 0; i < food.length; i++)
+						ing.possibleFood.add(new Food(food[i]));
+				}
 				}
 			}
 			//System.out.println(ing.name + ing.ingClass);

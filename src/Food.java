@@ -6,6 +6,11 @@ public class Food {
 	public List<Ingredient> ingrList = new ArrayList<Ingredient>();
 	public String name;
 	public String type;
+	
+	public Food(String sName)
+	{
+		name = sName;
+	}
 
 	public Food(String sType, String sName, Ingredient[] a) {
 		type = sType;

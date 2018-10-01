@@ -34,12 +34,23 @@ public class MixBot {
 	private static void initialize()
 	{
 		ingredients = FileWorker.parseIngredients(FileWorker.read("data/base.mbd"));
-		food.put("кровавая мэри", new Food("коктейль", "кровавая мэри", new Ingredient[] {ingredients.get("томат"), ingredients.get("водка"), ingredients.get("сельдерей")}));
-		for (Ingredient ing : food.get("кровавая мэри").ingrList)
+		for (Ingredient ing : ingredients.values())
 		{
-			ing.possibleFood.add(food.get("кровавая мэри"));
-		}
-		
+			ArrayList<Food> newFood = new ArrayList<Food>();
+			for (Food posFood : ing.possibleFood)
+			{
+				if (food.containsKey(posFood.name))
+				{
+					food.get(posFood.name).ingrList.add(ing);
+				}
+				else
+				{
+					food.put(posFood.name, new Food(posFood.type, posFood.name, new Ingredient[] {ing}));
+				}
+				newFood.add(food.get(posFood.name));
+			}
+			ing.possibleFood = newFood;
+		}		
 		dialogs.put("start", new SimpleDialog());
 		dialogs.put("basket", new BasketDialog());
 		
