@@ -6,7 +6,10 @@
 *.xml
 *.xml
 *.xml
+<<<<<<< HEAD
 *.xml
 *.class
 *.xml
+=======
+>>>>>>> Architecture
 *.class
