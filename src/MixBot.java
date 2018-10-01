@@ -22,7 +22,7 @@ public class MixBot {
 		}
 	}
 	public static String[] getWords() {
-		return input.nextLine().toLowerCase().split(" ");// .replaceAll("\\s","");
+		return input.nextLine().toLowerCase().replaceAll(",",  "").split(" ");// .replaceAll("\\s","");
 	}
 	public static void Act(Response response)
 	{
