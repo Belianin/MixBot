@@ -75,8 +75,11 @@ public class BasketDialog implements Dialog {
 			return "Из этого ничего не приготовить!";
 		// более подбробно чего не хватает и тд
 		StringBuilder builder = new StringBuilder();
-		builder.append("Вы можете приготовить коктейль \"" + result.food.name + "\". У вас есть ");
-		builder.append(result.getCount() + "\\" + result.checkList.size() + " продуктов!");
+		builder.append("У Вас есть " + result.getCount() + "/" + result.checkList.size());
+		builder.append(" продуктов для пригтотвления коктейля \"" + result.food.name + "\"");
+		for (PossibleFood posFod : possibleFood.values())
+		    System.out.println( posFod.food.name + posFod.getCount() + "/" + posFod.checkList.size());
+		//builder.append(result.getCount() + "\\" + result.checkList.size() + " продуктов!");
 		//builder.append("Что будем делать дальше?");
 
 		return builder.toString();

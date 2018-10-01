@@ -34,7 +34,7 @@ public class FileWorker {
 		for (String row : rowIng) {
 			//System.out.println(row);
 			Ingredient ing = new Ingredient();
-			String[] params = row.replace("\\s", "").split("&");
+			String[] params = row.split("&");//row.replace("\\s", "").split("&");
 			for (String param : params) {
 				String[] pair = param.split(":");
 				switch (pair[0]) {
