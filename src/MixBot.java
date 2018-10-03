@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class MixBot {
 	public static Map<String, Dialog> dialogs = new HashMap<String, Dialog>();
 	public static Map<String, Ingredient> ingredients;
-	public static Map<String, Food> food = new HashMap<String, Food>();
+	public static Map<String, Food> food;
 	private static Scanner input = new Scanner(System.in);
 	private static Dialog currentDialog;
 	
@@ -33,24 +33,9 @@ public class MixBot {
 	}
 	private static void initialize()
 	{
-		ingredients = FileWorker.parseIngredients(FileWorker.read("data/base.mbd"));
-		for (Ingredient ing : ingredients.values())
-		{
-			ArrayList<Food> newFood = new ArrayList<Food>();
-			for (Food posFood : ing.possibleFood)
-			{
-				if (food.containsKey(posFood.name))
-				{
-					food.get(posFood.name).ingrList.add(ing);
-				}
-				else
-				{
-					food.put(posFood.name, new Food(posFood.type, posFood.name, new Ingredient[] {ing}));
-				}
-				newFood.add(food.get(posFood.name));
-			}
-			ing.possibleFood = newFood;
-		}		
+		ingredients = FileWorker.parseIngredients(FileWorker.read("data/ingredients.mbd"));
+		food = FileWorker.parseFood(FileWorker.read("data/food.mbd"), ingredients);
+		
 		dialogs.put("start", new SimpleDialog());
 		dialogs.put("basket", new BasketDialog());
 		

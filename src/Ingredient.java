@@ -15,9 +15,7 @@ public class Ingredient {
 	
 	public Ingredient()
 	{
-		name = "";
-		ingClass = "";
-		possibleFood = new ArrayList<>();
+		
 	}
 
 }
