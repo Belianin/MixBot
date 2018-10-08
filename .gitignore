@@ -11,3 +11,5 @@
 =======
 *.class
 >>>>>>> Branch-One
+*.iml
+*.xml

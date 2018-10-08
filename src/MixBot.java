@@ -18,10 +18,10 @@ public class MixBot {
 		while (true)
 		{			
 			String[] words = getWords();
-			
-			if (words.length == 0 && words[0] == "stop")
-				break;
-			
+			if (words.length > 0 && words[0].equals("пока")) {
+			    System.out.println("До свидания!");
+                break;
+            }
 			Response response = currentDialog.respond(words);
 			Act(response);
 		}
