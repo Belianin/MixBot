@@ -4,11 +4,7 @@ import java.util.List;
 public class Ingredient {
 	public String name;
 	public String ingClass;
-<<<<<<< HEAD
 	public List<Food> possibleFood = new ArrayList<Food>();
-=======
-	public ArrayList<Food> possibleFood;
->>>>>>> 8a5ba77a3213869f03a97cb07c3714d3783dd511
 	
 	public Ingredient(String sName, String sClass, ArrayList<Food> food)
 	{
@@ -19,9 +15,28 @@ public class Ingredient {
 	
 	public Ingredient()
 	{
-		name = "";
-		ingClass = "";
-		possibleFood = new ArrayList<>();
+		
+	}
+	@Override
+	public int hashCode() {
+		double hash = possibleFood.size() * 17;
+		for (char a : (name + ingClass).toCharArray())
+		{
+			hash = Math.pow(hash, (int)a) * 31;
+		}
+			
+		return (int)hash;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other == this)
+			return true;
+		if (!(other instanceof Ingredient))
+			return false;
+		
+		Ingredient otherIng = (Ingredient)other;
+		return otherIng.name.equals(name) && otherIng.ingClass.equals(ingClass) && otherIng.possibleFood.equals(possibleFood);
 	}
 
 }

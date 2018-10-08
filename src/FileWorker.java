@@ -1,17 +1,14 @@
 import java.io.FileReader;
+import java.util.Map;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class FileWorker {
 
 	public static String read(String fileName) {
-		System.out.println(fileName);
 		StringBuilder sb = new StringBuilder();
-		try {
-			FileReader fr = new FileReader(fileName);
+		try (FileReader fr = new FileReader(fileName)){
 			Scanner scan = new Scanner(fr);
 
 			while (scan.hasNextLine()) {
@@ -22,7 +19,6 @@ public class FileWorker {
 		} catch (IOException e) {
 			System.out.println("File not found");
 		}
-
 		return sb.toString();
 	}
 
@@ -32,9 +28,8 @@ public class FileWorker {
 		rowString = rowString.toLowerCase();
 		String[] rowIng = rowString.split("!");
 		for (String row : rowIng) {
-			System.out.println(row);
 			Ingredient ing = new Ingredient();
-			String[] params = row.replace("\\s", "").split("&");
+			String[] params = row.split("&");
 			for (String param : params) {
 				String[] pair = param.split(":");
 				switch (pair[0]) {
@@ -48,10 +43,41 @@ public class FileWorker {
 				}
 				}
 			}
-			System.out.println(ing.name + ing.ingClass);
 			ingredients.put(ing.name, ing);
 		}
-
 		return ingredients;
+	}
+
+	public static HashMap<String, Food> parseFood(String rowString, Map<String, Ingredient> ingredients) {
+		HashMap<String, Food> foodDict = new HashMap<String, Food>();
+
+		rowString = rowString.toLowerCase();
+		String[] rowFood = rowString.split("!");
+		for (String row : rowFood) {
+			Food food = new Food();
+			String[] params = row.split("&");
+			for (String param : params) {
+				String[] pair = param.split(":");
+				switch (pair[0]) {
+				case "name": {
+					food.name = pair[1];
+					break;
+				}
+				case "ing": {
+					String[] ings = pair[1].split(",");
+					for (int i = 0; i < ings.length; i++) {
+						Ingredient ing = ingredients.get(ings[i]);
+						if (ing != null) {
+							food.ingrList.add(ing);
+							ing.possibleFood.add(food);
+						} else
+							System.out.println(ings[i] + " отсутвует в базе!");
+					}
+				}
+				}
+			}
+			foodDict.put(food.name, food);
+		}
+		return foodDict;
 	}
 }

@@ -1,5 +1,6 @@
 /bin/
 *.xml
+<<<<<<< HEAD
 *.xml
 .idea/misc.xml
 *.xml
@@ -7,3 +8,6 @@
 *.xml
 *.xml
 *.xml
+=======
+*.class
+>>>>>>> Branch-One
