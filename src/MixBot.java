@@ -17,7 +17,12 @@ public class MixBot {
 		System.out.println("Доброго времени суток! Что вы хотите делать?");
 		while (true)
 		{			
-			Response response = currentDialog.respond(getWords());
+			String[] words = getWords();
+			
+			if (words.length == 0 && words[0] == "stop")
+				break;
+			
+			Response response = currentDialog.respond(words);
 			Act(response);
 		}
 	}

@@ -8,8 +8,7 @@ public class FileWorker {
 
 	public static String read(String fileName) {
 		StringBuilder sb = new StringBuilder();
-		try {
-			FileReader fr = new FileReader(fileName);
+		try (FileReader fr = new FileReader(fileName)){
 			Scanner scan = new Scanner(fr);
 
 			while (scan.hasNextLine()) {

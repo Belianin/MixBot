@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class BasketDialog implements Dialog {
 	private Random random = new Random();
-	private List<String> params = new ArrayList<>();
-	private List<String> endWords = new ArrayList<>();
+	private HashSet<String> params = new HashSet<>();
+	private HashSet<String> endWords = new HashSet<>();
 	private List<String> elseWords = new ArrayList<>();
 
 	public BasketDialog() {
@@ -38,8 +38,8 @@ public class BasketDialog implements Dialog {
 			params.add(word);
 		}
 		if (params.size() > 6)
-			return new Response(elseWords.get(random.nextInt(2) + 2));
-		return new Response(elseWords.get(random.nextInt(2)));
+			return new Response(elseWords.get(random.nextInt(elseWords.size() / 2) + elseWords.size() / 2));
+		return new Response(elseWords.get(random.nextInt(elseWords.size() / 2)));
 	}
 
 	private String matchFood() {
@@ -47,14 +47,16 @@ public class BasketDialog implements Dialog {
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		// отсеиваем еду от бреда
 		for (String ing : params) {
-			if (MixBot.ingredients.containsKey(ing))
-				ingredients.add(MixBot.ingredients.get(ing));
+			Ingredient posIng = MixBot.ingredients.get(ing);
+			if (posIng != null)
+				ingredients.add(posIng);
 		}
 		// добавляем все возможные блюда
 		for (Ingredient ing : ingredients) {
 			for (Food food : ing.possibleFood) {
-				if (possibleFood.containsKey(food.name))
-					possibleFood.get(food.name).checkList.put(ing, true);
+				PossibleFood posFood = possibleFood.get(food.name);
+				if (posFood != null)
+					posFood.checkList.put(ing, true);
 				else
 					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
