@@ -5,9 +5,9 @@ public class EntryPointConsole {
 	
 	public static void main(String[] args) {
 		MixBot.initialize();
-		System.out.println("Доброго времени суток! Как вас зовут?");
+		System.out.println("Как вас зовут?");
 		String name = input.nextLine();
-		System.out.println("Здраствуйте!");
+		System.out.println("Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей.\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?");
 		while (true)
 		{			
 			String[] words = getWords();

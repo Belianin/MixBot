@@ -5,7 +5,7 @@ public class MixBot {
 	public static Map<String, Dialog> dialogs = new HashMap<String, Dialog>();
 	public static Map<String, Ingredient> ingredients;
 	public static Map<String, Food> food;
-	private static Map<String, UserData> users;
+	public static Map<String, UserData> users;
 
 	public static String respond(String name, String[] words) {
 		UserData user = users.get(name);
@@ -22,6 +22,11 @@ public class MixBot {
 		if (response.nextDialog != null)
 			user.dialog = response.nextDialog.getName();
 		return response.message;
+	}
+	
+	public static void deleteUser(String name) {
+		users.remove(name);
+		FileWorker.deleteUser(name);
 	}
 
 	public static void saveUsers() {
@@ -41,10 +46,10 @@ public class MixBot {
 
 		// currentDialog = dialogs.get("start");
 		dialogs.get("start").addAction(new String[] { "инфо", "помощь", "делать", "информация" },
-				new Response("MixBot может подсказать вам что приготовить, готовы?"));
-		dialogs.get("start").addAction(new String[] { "да", "начать", "готовить", "го" },
+				new Response("Что вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?"));
+		dialogs.get("start").addAction(new String[] { "из", "ингредиентов", "ингредиент", "1" },
 				new Response("Что у вас есть?", dialogs.get("basket")));
-		dialogs.get("start").addAction(new String[] { "хочу" },
+		dialogs.get("start").addAction(new String[] { "коктейль", "коктейлей", "конкретных", "2" },
 				new Response("Что вы хотите приготовить?", dialogs.get("food")));
 	}
 

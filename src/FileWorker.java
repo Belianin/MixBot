@@ -1,5 +1,6 @@
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.File;
 import java.util.Map;
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,10 +19,15 @@ public class FileWorker {
 			scan.close();
 			//fr.close();
 		} catch (IOException e) {
-			System.out.println("File not found");
+			//System.out.println("File not found");
 			return null;
 		}
 		return sb.toString();
+	}
+	
+	public static void deleteUser(String name) {
+		File file = new File("data/user/" + name);
+		file.delete();
 	}
 	
 	public static UserData loadUser(String name) {
