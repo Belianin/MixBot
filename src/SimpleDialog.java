@@ -5,13 +5,21 @@ public class SimpleDialog implements Dialog {
 
 	public Map<String, Response> keyWords;
 	public Response defaultResponse = new Response("Я не знаю такой команды :(");
+	public String name;
 	
-	public SimpleDialog(HashMap<String, Response> words)
+	public String getName()
 	{
+		return name;
+	}
+	
+	public SimpleDialog(String n, HashMap<String, Response> words)
+	{
+		name = n;
 		keyWords = words;
 	}
-	public SimpleDialog()
+	public SimpleDialog(String n)
 	{
+		name = n;
 		keyWords = new HashMap<String, Response>();
 	}
 	public Response respond(String[] words)

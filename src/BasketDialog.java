@@ -10,6 +10,11 @@ public class BasketDialog implements Dialog {
 	private HashSet<String> params = new HashSet<>();
 	private HashSet<String> endWords = new HashSet<>();
 	private List<String> elseWords = new ArrayList<>();
+	
+	public String getName()
+	{
+		return "basket";
+	}
 
 	public BasketDialog() {
 		endWords.add("все");

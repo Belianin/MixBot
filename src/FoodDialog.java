@@ -1,5 +1,10 @@
 
 public class FoodDialog implements Dialog{
+	
+	public String getName()
+	{
+		return "food";
+	}
 
 	@Override
 	public Response respond(String[] words) {

@@ -19,13 +19,14 @@ public class Ingredient {
 	}
 	@Override
 	public int hashCode() {
-		double hash = possibleFood.size() * 17;
+		int hash = 1 + possibleFood.size() * 17;
 		for (char a : (name + ingClass).toCharArray())
 		{
-			hash = Math.pow(hash, (int)a) * 31;
+			//hash = (int)Math.pow(hash, a);// * 31;
+			hash *= a;
 		}
 			
-		return (int)hash;
+		return hash;
 	}
 	
 	@Override

@@ -1,4 +1,5 @@
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Map;
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,12 +15,44 @@ public class FileWorker {
 			while (scan.hasNextLine()) {
 				sb.append(scan.nextLine());
 			}
-
-			fr.close();
+			scan.close();
+			//fr.close();
 		} catch (IOException e) {
 			System.out.println("File not found");
+			return null;
 		}
 		return sb.toString();
+	}
+	
+	public static UserData loadUser(String name) {
+		String rowUser = read("data/user/" + name);
+		if (rowUser == null)
+			return null;
+		UserData user = new UserData();
+		String[] params = rowUser.split("!");
+		for (String param : params) {
+			String[] keyValuePair = param.split("=");
+			switch (keyValuePair[0]) {
+			case "name":{
+				user.name = keyValuePair[1];
+				break;
+			}
+			case "dialog": {
+				user.dialog = keyValuePair[1];
+				break;
+			}
+			}
+		}
+		return user;
+	}
+	
+	public static void saveUser(UserData user) {
+		try (FileWriter fw = new FileWriter("data/user/" + user.name)){
+			fw.write("user=" + user.name + "!dialog=" + user.dialog);
+			fw.close();
+		} catch (IOException e) {
+			System.out.println("Writting error!");
+		}
 	}
 
 	public static HashMap<String, Ingredient> parseIngredients(String rowString) {
