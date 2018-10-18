@@ -22,7 +22,7 @@ public class SimpleDialog implements Dialog {
 		name = n;
 		keyWords = new HashMap<String, Response>();
 	}
-	public Response respond(String[] words)
+	public Response respond(UserData user, String[] words)
 	{
 		for (String word : words)
 		{

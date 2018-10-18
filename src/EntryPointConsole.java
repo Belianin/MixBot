@@ -10,19 +10,19 @@ public class EntryPointConsole {
 		System.out.println("Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей.\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?");
 		while (true)
 		{			
-			String[] words = getWords();
-			if (words.length > 0 && words[0].equals("пока")) {
-			    System.out.println("До свидания!");
+			String request = getWords();
+			if (request.equals("пока"))
                 break;
-            }
-			String response = MixBot.respond(name, words);
+			String response = MixBot.respond(name, request);
 			if (response != null)
 				System.out.println(response);
 		}
+		System.out.println("До свидания!");
+		//MixBot.finishSession(name);
 		MixBot.saveUsers();
 	}
 
-	public static String[] getWords() {
-		return input.nextLine().toLowerCase().replaceAll(",",  "").split(" ");// .replaceAll("\\s","");
+	public static String getWords() {
+		return input.nextLine();
 	}
 }

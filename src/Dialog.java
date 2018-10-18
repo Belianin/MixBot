@@ -1,7 +1,7 @@
 
 public interface Dialog {
 	String getName();
-	Response respond(String[] words);
+	Response respond(UserData user, String[] words);
 	void addAction(String[] words, Response response);
 	
 }

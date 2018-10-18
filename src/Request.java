@@ -1,5 +1,6 @@
 
 public class Request {
+	//not used. for future update
 	public String name;
 	public String rowRequest;
 	public String[] words;

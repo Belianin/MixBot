@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class BasketDialog implements Dialog {
 	private Random random = new Random();
-	private HashSet<String> params = new HashSet<>();
 	private HashSet<String> endWords = new HashSet<>();
 	private List<String> elseWords = new ArrayList<>();
 	
@@ -29,24 +28,27 @@ public class BasketDialog implements Dialog {
 		elseWords.add("Может уже хватит? :)");
 	}
 
-	public Response respond(String[] words) {
+	public Response respond(UserData user, String[] words) {
 		for (String word : words) {
 			if (endWords.contains(word)) {
-				if (params.size() == 0)
+				if (user.basket.size() == 0)
 					return new Response("Вы пока еще ничего не добавили!");
-				else
-					return new Response(matchFood(), MixBot.dialogs.get("start"));
+				else {
+					HashSet<String> params = user.basket;
+					user.basket = new HashSet<String>();
+					return new Response(matchFood(params), MixBot.dialogs.get("start"));
+				}
 			}
 		}
 		for (String word : words) {
-			params.add(word);
+			user.basket.add(word);
 		}
-		if (params.size() > 6)
+		if (user.basket.size() > 6)
 			return new Response(elseWords.get(random.nextInt(elseWords.size() / 2) + elseWords.size() / 2));
 		return new Response(elseWords.get(random.nextInt(elseWords.size() / 2)));
 	}
 
-	private String matchFood() {
+	private String matchFood(HashSet<String> params) {
 		Map<String, PossibleFood> possibleFood = new HashMap<>();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		// отсеиваем еду от бреда

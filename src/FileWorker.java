@@ -10,26 +10,26 @@ public class FileWorker {
 
 	public static String read(String fileName) {
 		StringBuilder sb = new StringBuilder();
-		try (FileReader fr = new FileReader(fileName)){
+		try (FileReader fr = new FileReader(fileName)) {
 			Scanner scan = new Scanner(fr);
 
 			while (scan.hasNextLine()) {
 				sb.append(scan.nextLine());
 			}
 			scan.close();
-			//fr.close();
+			// fr.close();
 		} catch (IOException e) {
-			//System.out.println("File not found");
+			// System.out.println("File not found");
 			return null;
 		}
 		return sb.toString();
 	}
-	
+
 	public static void deleteUser(String name) {
 		File file = new File("data/user/" + name);
 		file.delete();
 	}
-	
+
 	public static UserData loadUser(String name) {
 		String rowUser = read("data/user/" + name);
 		if (rowUser == null)
@@ -39,7 +39,7 @@ public class FileWorker {
 		for (String param : params) {
 			String[] keyValuePair = param.split("=");
 			switch (keyValuePair[0]) {
-			case "name":{
+			case "name": {
 				user.name = keyValuePair[1];
 				break;
 			}
@@ -47,14 +47,22 @@ public class FileWorker {
 				user.dialog = keyValuePair[1];
 				break;
 			}
+			case "basket": {
+				String[] ings = keyValuePair[1].split(",");
+				for (String ing : ings)
+					user.basket.add(ing);
+				break;
+			}
 			}
 		}
 		return user;
 	}
-	
+
 	public static void saveUser(UserData user) {
-		try (FileWriter fw = new FileWriter("data/user/" + user.name)){
-			fw.write("user=" + user.name + "!dialog=" + user.dialog);
+		try (FileWriter fw = new FileWriter("data/user/" + user.name, false)) {
+			fw.write("name=" + user.name + "!dialog=" + user.dialog);
+			if (user.basket.size() != 0)
+				fw.write("!basket=" + String.join(",", user.basket));
 			fw.close();
 		} catch (IOException e) {
 			System.out.println("Writting error!");

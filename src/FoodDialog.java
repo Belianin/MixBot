@@ -7,7 +7,7 @@ public class FoodDialog implements Dialog{
 	}
 
 	@Override
-	public Response respond(String[] words) {
+	public Response respond(UserData user, String[] words) {
 		if (words.length == 1)
 			if (MixBot.food.containsKey(words[0]))
 			{
