@@ -9,10 +9,19 @@ public class BasketDialog implements Dialog {
 	private Random random = new Random();
 	private HashSet<String> endWords = new HashSet<>();
 	private List<String> elseWords = new ArrayList<>();
-	
-	public String getName()
-	{
+
+	public String getName() {
 		return "basket";
+	}
+
+	public String getResumeMessage(UserData user) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Здравствуйте, " + user.name + ".");
+		if (user.basket.size() > 0)
+			sb.append("\nГотовы доперечислить ингредиенты?\nУ вас уже есть: " + String.join(", ", user.basket));
+		else
+			sb.append("\nВы хотели перечислить ингредиенты, но пока что ничего не добавили!");
+		return sb.toString();
 	}
 
 	public BasketDialog() {
@@ -67,7 +76,7 @@ public class BasketDialog implements Dialog {
 					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
 		}
-		//System.out.println(possibleFood.size());
+		// System.out.println(possibleFood.size());
 		// сравниваем какие сравнения больше подходят , смотрим хватате ли им
 		// ингридинетов и что добавить :(
 		PossibleFood result = null;
@@ -84,11 +93,14 @@ public class BasketDialog implements Dialog {
 		// более подбробно чего не хватает и тд
 		StringBuilder builder = new StringBuilder();
 		builder.append("Вы можете приготовить " + possibleFood.size() + " коктейлей:");
-		//builder.append(" продуктов для пригтотвления коктейля \"" + result.food.name + "\"");
+		// builder.append(" продуктов для пригтотвления коктейля \"" + result.food.name
+		// + "\"");
 		for (PossibleFood posFod : possibleFood.values())
-		    builder.append("\n" + posFod.food.name + " " + posFod.getCount() + "/" + posFod.checkList.size() + " ингредиентов");
-		//builder.append(result.getCount() + "\\" + result.checkList.size() + " продуктов!");
-		//builder.append("Что будем делать дальше?");
+			builder.append("\n" + posFod.food.name + " " + posFod.getCount() + "/" + posFod.checkList.size()
+					+ " ингредиентов");
+		// builder.append(result.getCount() + "\\" + result.checkList.size() + "
+		// продуктов!");
+		// builder.append("Что будем делать дальше?");
 
 		return builder.toString();
 	}
@@ -114,7 +126,7 @@ public class BasketDialog implements Dialog {
 		}
 
 		public double getPercentage() {
-			return (getCount() / (double)checkList.size()) * 100;
+			return (getCount() / (double) checkList.size()) * 100;
 		}
 	}
 

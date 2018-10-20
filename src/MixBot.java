@@ -30,6 +30,18 @@ public class MixBot {
 		FileWorker.deleteUser(name);
 		users.remove(name);
 	}
+	
+	public static String initializeSession(String name) {
+		UserData user = users.get(name);
+		if (user == null) {
+			user = FileWorker.loadUser(name);
+			if (user == null) {
+				user = new UserData(name);
+			}
+			users.put(user.name, user);
+		}
+		return dialogs.get(user.dialog).getResumeMessage(user);
+	}
 
 	public static void finishSession(String name) {
 		FileWorker.saveUser(users.get(name));
@@ -52,6 +64,7 @@ public class MixBot {
 		SimpleDialog startDialog = new SimpleDialog("start");
 		dialogs.put("start", startDialog);
 
+		startDialog.resumeMessage = "Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей.\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?";
 		startDialog.addAction(new String[] { "инфо", "помощь", "делать", "информация" },
 				new Response("Что вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?"));
 		startDialog.addAction(new String[] { "из", "ингредиентов", "ингредиент", "1" },

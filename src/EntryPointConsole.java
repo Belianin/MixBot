@@ -7,7 +7,8 @@ public class EntryPointConsole {
 		MixBot.initialize();
 		System.out.println("Как вас зовут?");
 		String name = input.nextLine();
-		System.out.println("Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей.\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?");
+		System.out.println(MixBot.initializeSession(name));
+		//System.out.println("Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей.\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?");
 		while (true)
 		{			
 			String request = getWords();
