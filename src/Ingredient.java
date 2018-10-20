@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Ingredient {
 	public String name;
 	public String ingClass;
 	public List<Food> possibleFood = new ArrayList<Food>();
+	public HashSet<String> synonyms = new HashSet<String>();
+	public char emoji; 
 	
 	public Ingredient(String sName, String sClass, ArrayList<Food> food)
 	{

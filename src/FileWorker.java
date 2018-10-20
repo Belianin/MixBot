@@ -88,10 +88,24 @@ public class FileWorker {
 					ing.ingClass = pair[1];
 					break;
 				}
+				case "syns": {
+					String[] syns = pair[1].split(",");
+					for (String syn : syns)
+						ing.synonyms.add(syn);
+					break;
+				}
+				case "emoji": {
+					ing.emoji = pair[1].charAt(0);
+					break;
+				}
 				}
 			}
 			ingredients.put(ing.name, ing);
+			//спорный момент
+			for (String syn : ing.synonyms)
+				ingredients.put(syn, ing);
 		}
+		
 		return ingredients;
 	}
 
