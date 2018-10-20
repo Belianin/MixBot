@@ -7,7 +7,7 @@ public class Ingredient {
 	public String ingClass;
 	public List<Food> possibleFood = new ArrayList<Food>();
 	public HashSet<String> synonyms = new HashSet<String>();
-	public char emoji; 
+	public String emoji; 
 	
 	public Ingredient(String sName, String sClass, ArrayList<Food> food)
 	{

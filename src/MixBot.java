@@ -58,11 +58,6 @@ public class MixBot {
 		users = new HashMap<String, UserData>();
 		ingredients = FileWorker.parseIngredients(FileWorker.read("data/ingredients.mbd"));
 		food = FileWorker.parseFood(FileWorker.read("data/food.mbd"), ingredients);
-		
-		for (Ingredient ing : ingredients.values()) {
-			if (ing.emoji != '\u0000');
-			System.out.println(ing.emoji);
-		}
 
 		dialogs.put("basket", new BasketDialog());
 		dialogs.put("food", new FoodDialog());

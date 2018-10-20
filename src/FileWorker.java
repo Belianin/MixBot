@@ -95,7 +95,7 @@ public class FileWorker {
 					break;
 				}
 				case "emoji": {
-					ing.emoji = pair[1].charAt(0);
+					ing.emoji = pair[1];
 					break;
 				}
 				}
@@ -104,6 +104,8 @@ public class FileWorker {
 			//спорный момент
 			for (String syn : ing.synonyms)
 				ingredients.put(syn, ing);
+			if (ing.emoji != null)
+				ingredients.put(ing.emoji, ing);
 		}
 		
 		return ingredients;
