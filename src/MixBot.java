@@ -64,12 +64,15 @@ public class MixBot {
 		SimpleDialog startDialog = new SimpleDialog("start");
 		dialogs.put("start", startDialog);
 
-		startDialog.resumeMessage = "Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей.\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?";
-		startDialog.addAction(new String[] { "инфо", "помощь", "делать", "информация" },
-				new Response("Что вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?"));
-		startDialog.addAction(new String[] { "из", "ингредиентов", "ингредиент", "1" },
-				new Response("Что у вас есть?", dialogs.get("basket")));
-		startDialog.addAction(new String[] { "коктейль", "коктейлей", "конкретных", "2" },
+		startDialog.resumeMessage = "Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей." +
+				"\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?";
+		startDialog.addAction(new String[] { "инфо", "помощь", "информация", "инструкция", "памагити", "help" },
+				new Response("Если вы хотите получить информацию по конкретному коктейлю, напишите \"1\";" +
+						"\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, " +
+						"напишите \"2\""));
+		startDialog.addAction(new String[] { "из ингредиентов", "ингредиент", "1", "ингредиенты", "по ингредиентам", "первое" },
+				new Response("Пожалуйста напишите, что у вас есть", dialogs.get("basket")));
+		startDialog.addAction(new String[] { "коктейль", "коктейлей", "2" },
 				new Response("Что вы хотите приготовить?", dialogs.get("food")));
 	}
 
