@@ -8,5 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="com.github.spotbugs:test-harness-jupiter:3.1.6" level="project" />
   </component>
 </module>
