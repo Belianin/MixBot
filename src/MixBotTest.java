@@ -65,18 +65,18 @@ public class MixBotTest {
         MixBot.initialize();
         MixBot.deleteUser("test");
         String response = MixBot.respond("test", "памагити");
-        assertEquals("Если вы хотите получить информацию по конкретному коктейлю, напишите \"1\";" +
+        assertEquals("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";" +
 						"\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, " +
-						"напишите \"2\"", response);
+						"напишите \"1\"", response);
         assertEquals("start", MixBot.users.get("test").dialog);
     }
 
     @Test
-    public void incorrectCommand(){
+    public void incorrectCommandAtStart(){
         MixBot.initialize();
         MixBot.deleteUser("test");
         String response = MixBot.respond("test", "kdjfbns");
-        assertEquals(((SimpleDialog)(MixBot.dialogs.get("start"))).defaultResponse.message, response);
+        assertEquals(SimpleDialog.defaultResponse.message, response);
         assertEquals("start", MixBot.users.get("test").dialog);
     }
 

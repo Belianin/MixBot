@@ -4,7 +4,7 @@ import java.util.Map;
 public class SimpleDialog implements Dialog {
 
 	public Map<String, Response> keyWords;
-	public Response defaultResponse = new Response("Я не знаю такой команды :(");
+	public static Response defaultResponse = new Response("Я не знаю такой команды :(");
 	public String name;
 	public String resumeMessage;
 

@@ -1,21 +1,4 @@
 /bin/
 *.xml
-<<<<<<< HEAD
-*.xml
-.idea/misc.xml
-*.xml
-*.xml
-*.xml
-*.xml
-*.xml
-=======
 *.class
->>>>>>> Branch-One
-*.iml
-*.xml
-*.xml
-*.jar
-*.xml
-*.iml
-*.xml
-*.iml
+/data/user
