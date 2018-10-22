@@ -9,6 +9,8 @@ public class BasketDialog implements Dialog {
 	private Random random = new Random();
 	private HashSet<String> endWords = new HashSet<>();
 	private List<String> elseWords = new ArrayList<>();
+	private Map<String, Ingredient> allIngredients;
+	private Dialog returnDialog;
 
 	public String getName() {
 		return "basket";
@@ -24,7 +26,9 @@ public class BasketDialog implements Dialog {
 		return sb.toString();
 	}
 
-	public BasketDialog() {
+	public BasketDialog(Dialog backDialog, Map<String, Ingredient> ingredients) {
+		returnDialog = backDialog;
+		allIngredients = ingredients;
 		endWords.add("все");
 		endWords.add("всё");
 		endWords.add("готово");
@@ -45,7 +49,7 @@ public class BasketDialog implements Dialog {
 				else {
 					HashSet<String> params = user.basket;
 					user.basket = new HashSet<String>();
-					return new Response(matchFood(params), MixBot.dialogs.get("start"));
+					return new Response(matchFood(params), returnDialog);
 				}
 			}
 		}
@@ -62,7 +66,7 @@ public class BasketDialog implements Dialog {
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		// отсеиваем еду от бреда
 		for (String ing : params) {
-			Ingredient posIng = MixBot.ingredients.get(ing);
+			Ingredient posIng = allIngredients.get(ing);
 			if (posIng != null)
 				ingredients.add(posIng);
 		}

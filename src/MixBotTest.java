@@ -6,78 +6,78 @@ public class MixBotTest {
 
     @Test
     public void startToFoodDialogChanging() {
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        MixBot.respond("test", "коктейль");
-        assertEquals("food", MixBot.users.get("test").dialog);
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        mixBot.respond("test", "коктейль");
+        assertEquals("food", mixBot.users.get("test").dialog);
     }
 
     @Test
     public void startToBasketDialogChanging() {
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        MixBot.respond("test", "ингредиент");
-        assertEquals("basket", MixBot.users.get("test").dialog);
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        mixBot.respond("test", "ингредиент");
+        assertEquals("basket", mixBot.users.get("test").dialog);
     }
 
     @Test
     public void stillInBasket() {
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        MixBot.respond("test", "ингредиент");
-        MixBot.respond("test", "томат");
-        MixBot.respond("test", "водка");
-        assertEquals("basket", MixBot.users.get("test").dialog);
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        mixBot.respond("test", "ингредиент");
+        mixBot.respond("test", "томат");
+        mixBot.respond("test", "водка");
+        assertEquals("basket", mixBot.users.get("test").dialog);
     }
 
     @Test
     public void returnToStart() {
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        MixBot.respond("test", "ингредиент");
-        MixBot.respond("test", "сельдерей");
-        MixBot.respond("test", "всё");
-        assertEquals("start", MixBot.users.get("test").dialog);
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        mixBot.respond("test", "ингредиент");
+        mixBot.respond("test", "сельдерей");
+        mixBot.respond("test", "всё");
+        assertEquals("start", mixBot.users.get("test").dialog);
     }
 
     @Test
     public void defunctIngredient(){
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        MixBot.respond("test", "ингредиент");
-        MixBot.respond("test", "ром");
-        MixBot.respond("test", "гуано");
-        MixBot.respond("test", "всё");
-        assertEquals("start", MixBot.users.get("test").dialog);
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        mixBot.respond("test", "ингредиент");
+        mixBot.respond("test", "ром");
+        mixBot.respond("test", "гуано");
+        mixBot.respond("test", "всё");
+        assertEquals("start", mixBot.users.get("test").dialog);
     }
 
     @Test
     public void defunctCocktail(){
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        MixBot.respond("test", "коктейль");
-        MixBot.respond("test", "некробиолог");
-        assertEquals("start", MixBot.users.get("test").dialog);
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        mixBot.respond("test", "коктейль");
+        mixBot.respond("test", "некробиолог");
+        assertEquals("start", mixBot.users.get("test").dialog);
     }
 
     @Test
     public void cryForHelp(){
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        String response = MixBot.respond("test", "памагити");
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        String response = mixBot.respond("test", "памагити");
         assertEquals("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";" +
 						"\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, " +
 						"напишите \"1\"", response);
-        assertEquals("start", MixBot.users.get("test").dialog);
+        assertEquals("start", mixBot.users.get("test").dialog);
     }
 
     @Test
     public void incorrectCommandAtStart(){
-        MixBot.initialize();
-        MixBot.deleteUser("test");
-        String response = MixBot.respond("test", "kdjfbns");
+    	MixBot mixBot = new MixBot();
+        mixBot.deleteUser("test");
+        String response = mixBot.respond("test", "kdjfbns");
         assertEquals(SimpleDialog.defaultResponse.message, response);
-        assertEquals("start", MixBot.users.get("test").dialog);
+        assertEquals("start", mixBot.users.get("test").dialog);
     }
 
 }
