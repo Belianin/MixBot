@@ -10,14 +10,7 @@ public class MixBot {
 	public static String respond(String name, String request) {
 		String[] words = request.toLowerCase().replaceAll(",", "").split(" ");// .replaceAll("\\s","");
 
-		UserData user = users.get(name);
-		if (user == null) {
-			user = FileWorker.loadUser(name);
-			if (user == null) {
-				user = new UserData(name);
-			}
-			users.put(user.name, user);
-		}
+		UserData user = getUser(name);
 		Dialog currentDialog = dialogs.get(user.dialog);
 
 		Response response = currentDialog.respond(user, words);
@@ -32,6 +25,11 @@ public class MixBot {
 	}
 	
 	public static String initializeSession(String name) {
+		UserData user = getUser(name);
+		return dialogs.get(user.dialog).getResumeMessage(user);
+	}
+	
+	private static UserData getUser(String name) {
 		UserData user = users.get(name);
 		if (user == null) {
 			user = FileWorker.loadUser(name);
@@ -40,7 +38,7 @@ public class MixBot {
 			}
 			users.put(user.name, user);
 		}
-		return dialogs.get(user.dialog).getResumeMessage(user);
+		return user;
 	}
 
 	public static void finishSession(String name) {

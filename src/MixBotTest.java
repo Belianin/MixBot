@@ -64,7 +64,10 @@ public class MixBotTest {
     public void cryForHelp(){
         MixBot.initialize();
         MixBot.deleteUser("test");
-        MixBot.respond("test", "памагити");
+        String response = MixBot.respond("test", "памагити");
+        assertEquals("Если вы хотите получить информацию по конкретному коктейлю, напишите \"1\";" +
+						"\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, " +
+						"напишите \"2\"", response);
         assertEquals("start", MixBot.users.get("test").dialog);
     }
 
@@ -72,7 +75,8 @@ public class MixBotTest {
     public void incorrectCommand(){
         MixBot.initialize();
         MixBot.deleteUser("test");
-        MixBot.respond("test", "kdjfbns");
+        String response = MixBot.respond("test", "kdjfbns");
+        assertEquals(((SimpleDialog)(MixBot.dialogs.get("start"))).defaultResponse.message, response);
         assertEquals("start", MixBot.users.get("test").dialog);
     }
 
