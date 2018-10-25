@@ -2,3 +2,6 @@
 *.xml
 *.class
 /data/user
+*.iml
+*.jar
+*.xml
