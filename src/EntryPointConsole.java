@@ -4,7 +4,7 @@ public class EntryPointConsole {
 	private static Scanner input = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		MixBot mixBot = new MixBot();
+		MixBot mixBot = new MixBot("data/user/");
 		System.out.println("Как вас зовут?");
 		String name = input.nextLine();
 		System.out.println(mixBot.initializeSession(name));

@@ -11,7 +11,7 @@ public class SimpleDialog implements Dialog {
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getResumeMessage(UserData user) {
 		return resumeMessage;
 	}
