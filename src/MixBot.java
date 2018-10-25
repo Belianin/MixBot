@@ -6,6 +6,8 @@ public class MixBot {
 	Map<String, Ingredient> ingredients;
 	Map<String, Food> food;
 	Map<String, UserData> users;
+	String userDirectory;
+	FileWorker fileWorker;
 
 	public String respond(String name, String request) {
 		String[] words = request.toLowerCase().replaceAll(",", "").split(" ");// .replaceAll("\\s","");
@@ -20,19 +22,19 @@ public class MixBot {
 	}
 
 	public void deleteUser(String name) {
-		FileWorker.deleteUser(name);
+		fileWorker.deleteUser(name);
 		users.remove(name);
 	}
-	
+
 	public String initializeSession(String name) {
 		UserData user = getUser(name);
 		return dialogs.get(user.dialog).getResumeMessage(user);
 	}
-	
+
 	private UserData getUser(String name) {
 		UserData user = users.get(name);
 		if (user == null) {
-			user = FileWorker.loadUser(name);
+			user = fileWorker.loadUser(name);
 			if (user == null) {
 				user = new UserData(name);
 			}
@@ -42,33 +44,36 @@ public class MixBot {
 	}
 
 	public void finishSession(String name) {
-		FileWorker.saveUser(users.get(name));
+		fileWorker.saveUser(users.get(name));
 		users.remove(name);
 	}
 
 	public void saveUsers() {
 		for (UserData user : users.values()) {
-			FileWorker.saveUser(user);
+			fileWorker.saveUser(user);
 		}
 	}
 
-	public MixBot() {
+	public MixBot(String userDir) {
+		userDirectory = userDir;
+		fileWorker = new FileWorker(userDirectory);
 		users = new HashMap<String, UserData>();
-		ingredients = FileWorker.parseIngredients(FileWorker.read("data/ingredients.mbd"));
-		food = FileWorker.parseFood(FileWorker.read("data/food.mbd"), ingredients);
+		ingredients = fileWorker.parseIngredients(fileWorker.read("data/ingredients.mbd"));
+		food = fileWorker.parseFood(fileWorker.read("data/food.mbd"), ingredients);
 
 		SimpleDialog startDialog = new SimpleDialog("start");
 		dialogs.put("start", startDialog);
 		dialogs.put("basket", new BasketDialog(startDialog, ingredients));
 		dialogs.put("food", new FoodDialog(startDialog, food));
 
-		startDialog.resumeMessage = "Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей." +
-				"\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?";
+		startDialog.resumeMessage = "Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей."
+				+ "\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?";
 		startDialog.addAction(new String[] { "инфо", "помощь", "информация", "инструкция", "памагити", "help" },
-				new Response("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";" +
-						"\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, " +
-						"напишите \"1\""));
-		startDialog.addAction(new String[] { "ингредиентов", "ингредиент", "1", "ингредиенты", "ингредиентам", "первое" },
+				new Response("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";"
+						+ "\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, "
+						+ "напишите \"1\""));
+		startDialog.addAction(
+				new String[] { "ингредиентов", "ингредиент", "1", "ингредиенты", "ингредиентам", "первое" },
 				new Response("Пожалуйста напишите, что у вас есть", dialogs.get("basket")));
 		startDialog.addAction(new String[] { "коктейль", "коктейлей", "2" },
 				new Response("Что вы хотите приготовить?", dialogs.get("food")));

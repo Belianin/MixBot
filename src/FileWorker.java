@@ -7,8 +7,13 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileWorker {
+	String userDirectory;
 
-	public static String read(String fileName) {
+	public FileWorker(String userDir) {
+		userDirectory = userDir;
+	}
+
+	public String read(String fileName) {
 		StringBuilder sb = new StringBuilder();
 		try (FileReader fr = new FileReader(fileName)) {
 			Scanner scan = new Scanner(fr);
@@ -25,13 +30,13 @@ public class FileWorker {
 		return sb.toString();
 	}
 
-	public static void deleteUser(String name) {
-		File file = new File("data/user/" + name);
+	public void deleteUser(String name) {
+		File file = new File(userDirectory + name);
 		file.delete();
 	}
 
-	public static UserData loadUser(String name) {
-		String rowUser = read("data/user/" + name);
+	public UserData loadUser(String name) {
+		String rowUser = read(userDirectory + name);
 		if (rowUser == null)
 			return null;
 		UserData user = new UserData();
@@ -58,8 +63,8 @@ public class FileWorker {
 		return user;
 	}
 
-	public static void saveUser(UserData user) {
-		try (FileWriter fw = new FileWriter("data/user/" + user.name, false)) {
+	public void saveUser(UserData user) {
+		try (FileWriter fw = new FileWriter(userDirectory + user.name, false)) {
 			fw.write("name=" + user.name + "!dialog=" + user.dialog);
 			if (user.basket.size() != 0)
 				fw.write("!basket=" + String.join(",", user.basket));
@@ -69,7 +74,7 @@ public class FileWorker {
 		}
 	}
 
-	public static HashMap<String, Ingredient> parseIngredients(String rowString) {
+	public HashMap<String, Ingredient> parseIngredients(String rowString) {
 		HashMap<String, Ingredient> ingredients = new HashMap<String, Ingredient>();
 
 		rowString = rowString.toLowerCase();
@@ -101,17 +106,17 @@ public class FileWorker {
 				}
 			}
 			ingredients.put(ing.name, ing);
-			//спорный момент
+			// спорный момент
 			for (String syn : ing.synonyms)
 				ingredients.put(syn, ing);
 			if (ing.emoji != null)
 				ingredients.put(ing.emoji, ing);
 		}
-		
+
 		return ingredients;
 	}
 
-	public static HashMap<String, Food> parseFood(String rowString, Map<String, Ingredient> ingredients) {
+	public HashMap<String, Food> parseFood(String rowString, Map<String, Ingredient> ingredients) {
 		HashMap<String, Food> foodDict = new HashMap<String, Food>();
 
 		rowString = rowString.toLowerCase();
