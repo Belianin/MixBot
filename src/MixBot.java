@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MixBot {
@@ -8,8 +10,9 @@ public class MixBot {
 	Map<String, UserData> users;
 	String userDirectory;
 	FileWorker fileWorker;
+	List<String> buttons;
 
-	public String respond(String name, String request) {
+	public Response respond(String name, String request) {
 		String[] words = request.toLowerCase().replaceAll(",", "").split(" ");// .replaceAll("\\s","");
 
 		UserData user = getUser(name);
@@ -18,7 +21,11 @@ public class MixBot {
 		Response response = currentDialog.respond(user, words);
 		if (response.nextDialog != null)
 			user.dialog = response.nextDialog.getName();
-		return response.message;
+		
+		if (user.dialog.equals("start"))
+			response.buttons = buttons;
+		
+		return response;
 	}
 
 	public void deleteUser(String name) {
@@ -26,9 +33,9 @@ public class MixBot {
 		users.remove(name);
 	}
 
-	public String initializeSession(String name) {
+	public Response initializeSession(String name) {
 		UserData user = getUser(name);
-		return dialogs.get(user.dialog).getResumeMessage(user);
+		return dialogs.get(user.dialog).getResumeResponse(user);
 	}
 
 	private UserData getUser(String name) {
@@ -66,8 +73,12 @@ public class MixBot {
 		dialogs.put("basket", new BasketDialog(startDialog, ingredients));
 		dialogs.put("food", new FoodDialog(startDialog, food));
 
-		startDialog.resumeMessage = "Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей."
-				+ "\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?";
+		buttons = new ArrayList<String>();
+		buttons.add("1 Коктейль по ингредиентам");
+		buttons.add("2 конкретный коктейль");
+		
+		startDialog.resumeResponse = new Response("Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей."
+				+ "\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?", null, buttons);
 		startDialog.addAction(new String[] { "инфо", "помощь", "информация", "инструкция", "памагити", "help" },
 				new Response("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";"
 						+ "\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, "
@@ -75,7 +86,7 @@ public class MixBot {
 		startDialog.addAction(
 				new String[] { "ингредиентов", "ингредиент", "1", "ингредиенты", "ингредиентам", "первое" },
 				new Response("Пожалуйста напишите, что у вас есть", dialogs.get("basket")));
-		startDialog.addAction(new String[] { "коктейль", "коктейлей", "2" },
+		startDialog.addAction(new String[] { "конкретный", "коктейль", "коктейлей", "2" },
 				new Response("Что вы хотите приготовить?", dialogs.get("food")));
 	}
 

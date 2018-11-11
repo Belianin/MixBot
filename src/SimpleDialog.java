@@ -6,14 +6,14 @@ public class SimpleDialog implements Dialog {
 	public Map<String, Response> keyWords;
 	public static Response defaultResponse = new Response("Я не знаю такой команды :(");
 	public String name;
-	public String resumeMessage;
+	public Response resumeResponse;
 
 	public String getName() {
 		return name;
 	}
 
-	public String getResumeMessage(UserData user) {
-		return resumeMessage;
+	public Response getResumeResponse(UserData user) {
+		return resumeResponse;
 	}
 
 	public SimpleDialog(String n, HashMap<String, Response> words) {

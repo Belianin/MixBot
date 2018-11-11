@@ -7,8 +7,8 @@ public class FoodDialog implements Dialog {
 		return "food";
 	}
 
-	public String getResumeMessage(UserData user) {
-		return "Здраствуйте, вы хотели выбрать коктейль.";
+	public Response getResumeResponse(UserData user) {
+		return new Response("Здраствуйте, вы хотели выбрать коктейль.");
 	}
 
 	@Override

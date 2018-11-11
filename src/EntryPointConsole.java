@@ -13,7 +13,7 @@ public class EntryPointConsole {
 			String request = getWords();
 			if (request.equals("пока") || request.equals("убейся"))
                 break;
-			String response = mixBot.respond(name, request);
+			String response = mixBot.respond(name, request).message;
 			if (response != null)
 				System.out.println(response);
 		}

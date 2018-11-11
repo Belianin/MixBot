@@ -37,6 +37,7 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 	@Override
 	public void onUpdateReceived(Update e) {
 		processMessage(e);
+		//ListenThread a = new ListenThread();
 	}
 
 	private void processMessage(Update e) {
@@ -62,11 +63,13 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 			sendMsg(msg, mixBot.respond(msg.getChatId().toString(), text));
 	}
 
-	public void sendMsg(Message msg, String text) {
+	public void sendMsg(Message msg, Response response) {
 		SendMessage s = new SendMessage();
 		s.setChatId(msg.getChatId());
-		s.setText(text);
-		s.setReplyMarkup(getMarkup());
+		s.setText(response.message);
+		
+		if (response.buttons != null && response.buttons.size() != 0)
+			s.setReplyMarkup(getMarkup(response.buttons));
 
 		try {
 			execute(s);
@@ -75,16 +78,18 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 		}
 	}
 
-	private InlineKeyboardMarkup getMarkup() {
+	private InlineKeyboardMarkup getMarkup(List<String> buttons) {
 
 		InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
 		List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
 
-		InlineKeyboardButton button = new InlineKeyboardButton();
-		button.setText("КНУПОЧКА");
-		button.setCallbackData("test_Back");
+		for (String buttonName : buttons) {
+			InlineKeyboardButton button = new InlineKeyboardButton();
+			button.setText(buttonName);
+			button.setCallbackData(buttonName);
+			keyboard.add(Arrays.asList(button));
+		}
 
-		keyboard.add(Arrays.asList(button));
 		markup.setKeyboard(keyboard);
 		return markup;
 	}

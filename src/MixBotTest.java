@@ -58,7 +58,7 @@ public class MixBotTest {
 
     @Test
     public void cryForHelp(){
-        String response = mixBot.respond("test", "памагити");
+        String response = mixBot.respond("test", "памагити").message;
         assertEquals("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";" +
 						"\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, " +
 						"напишите \"1\"", response);
@@ -67,7 +67,7 @@ public class MixBotTest {
 
     @Test
     public void incorrectCommandAtStart(){
-        String response = mixBot.respond("test", "kdjfbns");
+        String response = mixBot.respond("test", "kdjfbns").message;
         assertEquals(SimpleDialog.defaultResponse.message, response);
         assertEquals("start", mixBot.users.get("test").dialog);
     }

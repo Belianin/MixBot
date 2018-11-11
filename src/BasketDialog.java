@@ -16,14 +16,14 @@ public class BasketDialog implements Dialog {
 		return "basket";
 	}
 
-	public String getResumeMessage(UserData user) {
+	public Response getResumeResponse(UserData user) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Здравствуйте, " + user.name + ".");
 		if (user.basket.size() > 0)
 			sb.append("\nГотовы доперечислить ингредиенты?\nУ вас уже есть: " + String.join(", ", user.basket));
 		else
 			sb.append("\nВы хотели перечислить ингредиенты, но пока что ничего не добавили!");
-		return sb.toString();
+		return new Response(sb.toString(), null, "Все");
 	}
 
 	public BasketDialog(Dialog backDialog, Map<String, Ingredient> ingredients) {
@@ -57,8 +57,8 @@ public class BasketDialog implements Dialog {
 			user.basket.add(word);
 		}
 		if (user.basket.size() > 6)
-			return new Response(elseWords.get(random.nextInt(elseWords.size() / 2) + elseWords.size() / 2));
-		return new Response(elseWords.get(random.nextInt(elseWords.size() / 2)));
+			return new Response(elseWords.get(random.nextInt(elseWords.size() / 2) + elseWords.size() / 2), null, "Все");
+		return new Response(elseWords.get(random.nextInt(elseWords.size() / 2)), null, "Все");
 	}
 
 	private String matchFood(HashSet<String> params) {
