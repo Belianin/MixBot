@@ -6,14 +6,12 @@ public class Food {
 	public List<Ingredient> ingrList = new ArrayList<Ingredient>();
 	public String name;
 	public String type;
-	
-	public Food()
-	{
-		
+
+	public Food() {
+
 	}
-	
-	public Food(String sName)
-	{
+
+	public Food(String sName) {
 		name = sName;
 	}
 

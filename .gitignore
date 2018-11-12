@@ -8,5 +8,8 @@
 *.xml
 *.xml
 *.class
+*.class
+/data/user
 *.iml
+*.jar
 *.xml

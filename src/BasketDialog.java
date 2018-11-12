@@ -7,11 +7,28 @@ import java.util.Random;
 
 public class BasketDialog implements Dialog {
 	private Random random = new Random();
-	private HashSet<String> params = new HashSet<>();
 	private HashSet<String> endWords = new HashSet<>();
 	private List<String> elseWords = new ArrayList<>();
+	private Map<String, Ingredient> allIngredients;
+	private Dialog returnDialog;
 
-	public BasketDialog() {
+	public String getName() {
+		return "basket";
+	}
+
+	public Response getResumeResponse(UserData user) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Здравствуйте, " + user.name + ".");
+		if (user.basket.size() > 0)
+			sb.append("\nГотовы доперечислить ингредиенты?\nУ вас уже есть: " + String.join(", ", user.basket));
+		else
+			sb.append("\nВы хотели перечислить ингредиенты, но пока что ничего не добавили!");
+		return new Response(sb.toString(), null, "Все");
+	}
+
+	public BasketDialog(Dialog backDialog, Map<String, Ingredient> ingredients) {
+		returnDialog = backDialog;
+		allIngredients = ingredients;
 		endWords.add("все");
 		endWords.add("всё");
 		endWords.add("готово");
@@ -24,29 +41,32 @@ public class BasketDialog implements Dialog {
 		elseWords.add("Может уже хватит? :)");
 	}
 
-	public Response respond(String[] words) {
+	public Response respond(UserData user, String[] words) {
 		for (String word : words) {
 			if (endWords.contains(word)) {
-				if (params.size() == 0)
+				if (user.basket.size() == 0)
 					return new Response("Вы пока еще ничего не добавили!");
-				else
-					return new Response(matchFood(), MixBot.dialogs.get("start"));
+				else {
+					HashSet<String> params = user.basket;
+					user.basket = new HashSet<String>();
+					return new Response(matchFood(params), returnDialog);
+				}
 			}
 		}
 		for (String word : words) {
-			params.add(word);
+			user.basket.add(word);
 		}
-		if (params.size() > 6)
-			return new Response(elseWords.get(random.nextInt(elseWords.size() / 2) + elseWords.size() / 2));
-		return new Response(elseWords.get(random.nextInt(elseWords.size() / 2)));
+		if (user.basket.size() > 6)
+			return new Response(elseWords.get(random.nextInt(elseWords.size() / 2) + elseWords.size() / 2), null, "Все");
+		return new Response(elseWords.get(random.nextInt(elseWords.size() / 2)), null, "Все");
 	}
 
-	private String matchFood() {
+	private String matchFood(HashSet<String> params) {
 		Map<String, PossibleFood> possibleFood = new HashMap<>();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		// отсеиваем еду от бреда
 		for (String ing : params) {
-			Ingredient posIng = MixBot.ingredients.get(ing);
+			Ingredient posIng = allIngredients.get(ing);
 			if (posIng != null)
 				ingredients.add(posIng);
 		}
@@ -60,7 +80,7 @@ public class BasketDialog implements Dialog {
 					possibleFood.put(food.name, new PossibleFood(food, ing));
 			}
 		}
-		//System.out.println(possibleFood.size());
+		// System.out.println(possibleFood.size());
 		// сравниваем какие сравнения больше подходят , смотрим хватате ли им
 		// ингридинетов и что добавить :(
 		PossibleFood result = null;
@@ -77,11 +97,14 @@ public class BasketDialog implements Dialog {
 		// более подбробно чего не хватает и тд
 		StringBuilder builder = new StringBuilder();
 		builder.append("Вы можете приготовить " + possibleFood.size() + " коктейлей:");
-		//builder.append(" продуктов для пригтотвления коктейля \"" + result.food.name + "\"");
+		// builder.append(" продуктов для пригтотвления коктейля \"" + result.food.name
+		// + "\"");
 		for (PossibleFood posFod : possibleFood.values())
-		    builder.append("\n" + posFod.food.name + " " + posFod.getCount() + "/" + posFod.checkList.size() + " ингредиентов");
-		//builder.append(result.getCount() + "\\" + result.checkList.size() + " продуктов!");
-		//builder.append("Что будем делать дальше?");
+			builder.append("\n" + posFod.food.name + " " + posFod.getCount() + "/" + posFod.checkList.size()
+					+ " ингредиентов");
+		// builder.append(result.getCount() + "\\" + result.checkList.size() + "
+		// продуктов!");
+		// builder.append("Что будем делать дальше?");
 
 		return builder.toString();
 	}
@@ -107,7 +130,7 @@ public class BasketDialog implements Dialog {
 		}
 
 		public double getPercentage() {
-			return (getCount() / (double)checkList.size()) * 100;
+			return (getCount() / (double) checkList.size()) * 100;
 		}
 	}
 

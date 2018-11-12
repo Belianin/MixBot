@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Ingredient {
 	public String name;
 	public String ingClass;
 	public List<Food> possibleFood = new ArrayList<Food>();
+	public HashSet<String> synonyms = new HashSet<String>();
+	public String emoji; 
 	
 	public Ingredient(String sName, String sClass, ArrayList<Food> food)
 	{
@@ -19,13 +22,14 @@ public class Ingredient {
 	}
 	@Override
 	public int hashCode() {
-		double hash = possibleFood.size() * 17;
+		int hash = 1 + possibleFood.size() * 17;
 		for (char a : (name + ingClass).toCharArray())
 		{
-			hash = Math.pow(hash, (int)a) * 31;
+			//hash = (int)Math.pow(hash, a);// * 31;
+			hash *= a;
 		}
 			
-		return (int)hash;
+		return hash;
 	}
 	
 	@Override
