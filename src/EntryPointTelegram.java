@@ -31,7 +31,6 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 	@Override
 	public String getBotUsername() {
 		return "IngriBot";
-		// возвращаем юзера
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 		//ListenThread a = new ListenThread();
 	}
 
-	private void processMessage(Update e) {
+	private synchronized void processMessage(Update e) {
 		Message msg = null;
 		String text = null;
 
