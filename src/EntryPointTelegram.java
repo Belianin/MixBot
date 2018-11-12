@@ -36,7 +36,6 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 	@Override
 	public void onUpdateReceived(Update e) {
 		processMessage(e);
-		//ListenThread a = new ListenThread();
 	}
 
 	private synchronized void processMessage(Update e) {
@@ -57,12 +56,12 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 		System.out.println(text);
 
 		if (text.equals("/start"))
-			sendMsg(msg, mixBot.initializeSession(msg.getChatId().toString()));
+			sendMessage(msg, mixBot.initializeSession(msg.getChatId().toString()));
 		else
-			sendMsg(msg, mixBot.respond(msg.getChatId().toString(), text));
+			sendMessage(msg, mixBot.respond(msg.getChatId().toString(), text));
 	}
 
-	public void sendMsg(Message msg, Response response) {
+	private void sendMessage(Message msg, Response response) {
 		SendMessage s = new SendMessage();
 		s.setChatId(msg.getChatId());
 		s.setText(response.message);
