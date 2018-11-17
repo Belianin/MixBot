@@ -1,3 +1,4 @@
+package mixBot;
 
 public class Request {
 	//not used. for future update

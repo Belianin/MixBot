@@ -1,3 +1,4 @@
+package mixBot;
 import java.util.Map;
 
 public class FoodDialog implements Dialog {

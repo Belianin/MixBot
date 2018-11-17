@@ -1,3 +1,4 @@
+package mixBot;
 
 public interface Dialog {
 	String getName();

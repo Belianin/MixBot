@@ -1,3 +1,4 @@
+package mixBot;
 import java.util.Scanner;
 
 public class EntryPointConsole {
