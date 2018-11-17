@@ -94,5 +94,13 @@ public class MixBotTest {
         assertEquals(SimpleDialog.defaultResponse.message, response);
         assertEquals("start", mixBot.users.get("test").dialog);
     }
+    
+    @Test
+    public void usersDoNotIntersect() {
+    	mixBot.respond("test", "1");
+    	mixBot.respond("vasya", "ы");
+    	mixBot.respond("petya", "2");
+    	assertEquals("basket", mixBot.users.get("test").dialog);
+    }
 
 }
