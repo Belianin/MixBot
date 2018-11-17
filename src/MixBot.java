@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MixBot {
-	Map<String, Dialog> dialogs = new HashMap<String, Dialog>();
+	Map<String, Dialog> dialogs = new ConcurrentHashMap<String, Dialog>();
 	Map<String, Ingredient> ingredients;
 	Map<String, Food> food;
 	Map<String, UserData> users;
@@ -16,6 +17,8 @@ public class MixBot {
 		String[] words = request.toLowerCase().replaceAll(",", "").split(" ");// .replaceAll("\\s","");
 
 		UserData user = getUser(name);
+		if (user == null)
+			user = getUser(name);
 		Dialog currentDialog = dialogs.get(user.dialog);
 
 		Response response = currentDialog.respond(user, words);
@@ -35,17 +38,20 @@ public class MixBot {
 
 	public Response initializeSession(String name) {
 		UserData user = getUser(name);
+		if (user == null)
+			user = getUser(name);
 		return dialogs.get(user.dialog).getResumeResponse(user);
 	}
 
-	private UserData getUser(String name) {
-		UserData user = users.get(name);
+	private synchronized UserData getUser(String name) {
+		return users.putIfAbsent(name, loadUser(name));
+	}
+	
+	private UserData loadUser(String name)
+	{
+		UserData user = fileWorker.loadUser(name);
 		if (user == null) {
-			user = fileWorker.loadUser(name);
-			if (user == null) {
-				user = new UserData(name);
-			}
-			users.put(user.name, user);
+			user = new UserData(name);
 		}
 		return user;
 	}

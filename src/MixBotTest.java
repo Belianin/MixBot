@@ -31,6 +31,15 @@ public class MixBotTest {
         mixBot.respond("test", "водка");
         assertEquals("basket", mixBot.users.get("test").dialog);
     }
+    
+    @Test
+    public void returnFood_When_IngredientsMatch() {
+        mixBot.respond("test", "ингредиент");
+        mixBot.respond("test", "томат");
+        mixBot.respond("test", "водка");
+        Response response = mixBot.respond("test", "все");
+        assertTrue(response.message.contains("кровавая мэри"));
+    }
 
     @Test
     public void returnToStart_After_FinishingBasket() {

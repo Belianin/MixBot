@@ -38,7 +38,7 @@ public class EntryPointTelegram extends TelegramLongPollingBot {
 		processMessage(e);
 	}
 
-	private synchronized void processMessage(Update e) {
+	private void processMessage(Update e) {
 		Message msg = null;
 		String text = null;
 
