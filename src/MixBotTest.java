@@ -50,19 +50,26 @@ public class MixBotTest {
     }
     
     @Test
-    public void returnToStart_After_FinishingFoodd() {
+    public void returnFoodRecepie_When_ItExists() {
+    	mixBot.respond("test", "2");
+        Response response = mixBot.respond("test", "некролог");
+        assertTrue(response.message.contains("вермут"));
+    }
+    
+    @Test
+    public void returnToStart_After_FinishingFood() {
         mixBot.respond("test", "2");
         mixBot.respond("test", "некролог");
         assertEquals("start", mixBot.users.get("test").dialog);
     }
 
+    //спорное название
     @Test
     public void doNotThrowExcteption_When_IncorrectIngredientInBasket(){
         mixBot.respond("test", "ингредиент");
         mixBot.respond("test", "ром");
         mixBot.respond("test", "гуано");
-        mixBot.respond("test", "всё");
-        assertEquals("start", mixBot.users.get("test").dialog);
+        assertEquals("basket", mixBot.users.get("test").dialog);
     }
 
     @Test
@@ -73,7 +80,7 @@ public class MixBotTest {
     }
 
     @Test
-    public void helpMessage_When_AskingForHelp(){
+    public void showHelp_When_AskingForHelp(){
         String response = mixBot.respond("test", "памагити").message;
         assertEquals("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";" +
 						"\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, " +
@@ -82,7 +89,7 @@ public class MixBotTest {
     }
 
     @Test
-    public void defaultResponse_At_IncorrectCommandAtStart_(){
+    public void defaultResponse_At_IncorrectCommandAtStart(){
         String response = mixBot.respond("test", "kdjfbns").message;
         assertEquals(SimpleDialog.defaultResponse.message, response);
         assertEquals("start", mixBot.users.get("test").dialog);
