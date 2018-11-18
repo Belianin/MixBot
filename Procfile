@@ -1,1 +1,1 @@
-worker: sh target/bin/EntryPointTelegram
+worker: sh target/bin/mixBot/EntryPointTelegram
