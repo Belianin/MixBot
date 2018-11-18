@@ -1,1 +1,1 @@
-worker: sh target/bin/mixBot
+worker: java target/src/mixBot/EntryPointTelegram.java
