@@ -49,7 +49,7 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>Main</mainClass>
+                            <mainClass>EntryPointTelegram</mainClass>
                             <name>workerBot</name>
                         </program>
                     </programs>
