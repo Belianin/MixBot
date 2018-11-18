@@ -50,7 +50,7 @@
                     <programs>
                         <program>
                             <mainClass>EntryPointTelegram</mainClass>
-                            <name>workerBot</name>
+                            <name>EntryPointTelegram</name>
                         </program>
                     </programs>
                 </configuration>
