@@ -12,7 +12,6 @@ public class FoodDialog implements Dialog {
 		return new Response("Здраствуйте, вы хотели выбрать коктейль.");
 	}
 
-	@Override
 	public Response respond(UserData user, String[] words) {
 		if (words.length == 1)
 			if (allFood.containsKey(words[0])) {

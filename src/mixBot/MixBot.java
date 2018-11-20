@@ -1,4 +1,5 @@
 package mixBot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,18 +19,18 @@ public class MixBot {
 		String[] words = request.toLowerCase().replaceAll(",", "").split(" ");// .replaceAll("\\s","");
 
 		UserData user = getUser(name);
-		if (user == null)
-			user = getUser(name);
-		Dialog currentDialog = dialogs.get(user.dialog);
+		synchronized (user) {
+			Dialog currentDialog = dialogs.get(user.dialog);
 
-		Response response = currentDialog.respond(user, words);
-		if (response.nextDialog != null)
-			user.dialog = response.nextDialog.getName();
-		
-		if (user.dialog.equals("start"))
-			response.buttons = buttons;
-		
-		return response;
+			Response response = currentDialog.respond(user, words);
+			if (response.nextDialog != null)
+				user.dialog = response.nextDialog.getName();
+
+			if (user.dialog.equals("start"))
+				response.buttons = buttons;
+
+			return response;
+		}
 	}
 
 	public void deleteUser(String name) {
@@ -39,17 +40,18 @@ public class MixBot {
 
 	public Response initializeSession(String name) {
 		UserData user = getUser(name);
-		if (user == null)
-			user = getUser(name);
 		return dialogs.get(user.dialog).getResumeResponse(user);
 	}
 
-	private synchronized UserData getUser(String name) {
-		return users.putIfAbsent(name, loadUser(name));
+	private UserData getUser(String name) {
+		UserData user = users.computeIfAbsent(name, u -> loadUser(u));
+		if (user != null)
+			return user;
+		
+		return users.computeIfAbsent(name, u -> loadUser(u));
 	}
-	
-	private UserData loadUser(String name)
-	{
+
+	private UserData loadUser(String name) {
 		UserData user = fileWorker.loadUser(name);
 		if (user == null) {
 			user = new UserData(name);
@@ -71,7 +73,7 @@ public class MixBot {
 	public MixBot(String userDir) {
 		userDirectory = userDir;
 		fileWorker = new FileWorker(userDirectory);
-		users = new HashMap<String, UserData>();
+		users = new ConcurrentHashMap<String, UserData>();
 		ingredients = fileWorker.parseIngredients(fileWorker.read("data/ingredients.mbd"));
 		food = fileWorker.parseFood(fileWorker.read("data/food.mbd"), ingredients);
 
@@ -83,9 +85,11 @@ public class MixBot {
 		buttons = new ArrayList<String>();
 		buttons.add("1 Коктейль по ингредиентам");
 		buttons.add("2 конкретный коктейль");
-		
-		startDialog.resumeResponse = new Response("Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей."
-				+ "\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?", null, buttons);
+
+		startDialog.resumeResponse = new Response(
+				"Здраствуйте, меня зовут MixBot, я могу помочь вам в приготовлении коктейлей."
+						+ "\nЧто вы хотите, конкретный коктейль или сделать что нибудь из ваших ингредиентов?",
+				null, buttons);
 		startDialog.addAction(new String[] { "инфо", "помощь", "информация", "инструкция", "памагити", "help" },
 				new Response("Если вы хотите получить информацию по конкретному коктейлю, напишите \"2\";"
 						+ "\nЕсли же вам нужна помощь по приготовлению из имеющихся у вас ингредиентов, "
